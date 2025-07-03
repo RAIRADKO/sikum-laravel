@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Opd; // <-- TAMBAHKAN BARIS INI
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        // Ambil data OPD yang aktif dari database
+        $opds = Opd::where('status', 'aktif')->orderBy('nama_opd')->get();
+
+        // Kirim data $opds ke view
+        return view('auth.register', ['opds' => $opds]);
     }
 
     /**
@@ -30,14 +35,16 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'nama' => ['required', 'string', 'max:255'],
+            'nip' => ['required', 'string', 'max:255', 'unique:'.User::class], // Anda mungkin ingin mengganti validasi NIP
+            'id_opd' => ['required', 'exists:opds,id_opd'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'id_opd' => $request->id_opd,
             'password' => Hash::make($request->password),
         ]);
 
