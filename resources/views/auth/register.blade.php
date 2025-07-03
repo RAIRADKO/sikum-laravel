@@ -1,56 +1,60 @@
-<?php
+<x-guest-layout>
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
 
-namespace App\Http\Controllers\Auth;
+        <div>
+            <x-input-label for="nama" :value="__('Nama Lengkap')" />
+            <x-text-input id="nama" class="block mt-1 w-full" type="text" name="nama" :value="old('nama')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('nama')" class="mt-2" />
+        </div>
+        
+        <div class="mt-4">
+            <x-input-label for="nip" :value="__('NIP')" />
+            <x-text-input id="nip" class="block mt-1 w-full" type="text" name="nip" :value="old('nip')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('nip')" class="mt-2" />
+        </div>
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Opd; // Import model OPD
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+        <div class="mt-4">
+            <x-input-label for="id_opd" :value="__('OPD (Organisasi Perangkat Daerah)')" />
+            {{-- Ambil data OPD dari controller --}}
+            <select id="id_opd" name="id_opd" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                @foreach($opds as $opd)
+                    <option value="{{ $opd->id_opd }}">{{ $opd->nama_opd }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('id_opd')" class="mt-2" />
+        </div>
 
-class RegisteredUserController extends Controller
-{
-    /**
-     * Display the registration view.
-     */
-    public function create(): View
-    {
-        // Ambil data OPD yang aktif untuk ditampilkan di dropdown
-        $opds = Opd::where('status', 'aktif')->orderBy('nama_opd')->get();
-        return view('auth.register', ['opds' => $opds]);
-    }
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'id_opd' => ['required', 'exists:opds,id_opd'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                type="password"
+                                name="password_confirmation" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
 
-        $user = User::create([
-            'nama' => $request->nama,
-            'nip' => $request->nip,
-            'id_opd' => $request->id_opd,
-            'password' => Hash::make($request->password),
-            'level' => 'user', // Otomatis set level sebagai 'user'
-        ]);
+        <div class="flex items-center justify-end mt-6">
+            <x-primary-button class="w-full justify-center">
+                {{ __('Daftar') }}
+            </x-primary-button>
+        </div>
 
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
-    }
-}
+        <div class="text-center mt-4">
+            <p class="text-sm text-gray-600">
+                Sudah punya akun?
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                    Login di sini
+                </a>
+            </p>
+        </div>
+    </form>
+</x-guest-layout>
