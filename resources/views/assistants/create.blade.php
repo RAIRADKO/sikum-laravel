@@ -17,11 +17,12 @@
                 <input type="text" id="nip" name="nip" value="{{ old('nip') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
             </div>
             
-            <div class="flex justify-start">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                    Simpan
-                </button>
-                 <a href="{{ route('assistants.index') }}" class="ml-2 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            <div class="flex justify-start items-center gap-4">
+                <x-primary-button>
+                    {{ __('Simpan') }}
+                </x-primary-button>
+                
+                <a href="{{ route('assistants.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50">
                     Batal
                 </a>
             </div>

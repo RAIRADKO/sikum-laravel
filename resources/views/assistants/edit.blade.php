@@ -18,11 +18,12 @@
                 <input type="text" id="nip" name="nip" value="{{ old('nip', $assistant->nip) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
             </div>
             
-            <div class="flex justify-start">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                    Update
-                </button>
-                 <a href="{{ route('assistants.index') }}" class="ml-2 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            <div class="flex items-center gap-4">
+                <x-primary-button>
+                    {{ __('Update') }}
+                </x-primary-button>
+
+                <a href="{{ route('assistants.index') }}" class="text-sm text-gray-600 hover:text-gray-900 underline">
                     Batal
                 </a>
             </div>

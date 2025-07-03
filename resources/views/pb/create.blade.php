@@ -22,9 +22,9 @@
             </div>
             
             <div class="flex justify-end">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                    Kirim Pengajuan
-                </button>
+                <x-primary-button>
+                    {{ __('Kirim Pengajuan') }}
+                </x-primary-button>
             </div>
         </div>
     </form>
