@@ -37,6 +37,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'nip' => ['required', 'string', 'max:255', 'unique:'.User::class], // Anda mungkin ingin mengganti validasi NIP
+            'no_kontak' => ['nullable', 'string', 'max:20'], // DITAMBAHKAN
             'id_opd' => ['required', 'exists:opds,id_opd'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -44,6 +45,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'nama' => $request->nama,
             'nip' => $request->nip,
+            'no_kontak' => $request->no_kontak, // DITAMBAHKAN
             'id_opd' => $request->id_opd,
             'password' => Hash::make($request->password),
         ]);

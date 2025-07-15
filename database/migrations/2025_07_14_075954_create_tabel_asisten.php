@@ -7,23 +7,22 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
-        Schema::create('opds', function (Blueprint $table) {
-            $table->id('id_opd');
-            $table->string('nama_opd')->unique();
-            $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
+        Schema::create('asisten', function (Blueprint $table) {
+            $table->string('id', 10)->primary();
+            $table->text('name');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Batalkan migrasi.
      */
     public function down(): void
     {
-        Schema::dropIfExists('opds');
+        Schema::dropIfExists('asisten');
     }
 };

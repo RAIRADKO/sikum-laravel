@@ -14,6 +14,13 @@
             <x-input-error :messages="$errors->get('nip')" class="mt-2" />
         </div>
 
+        {{-- TAMBAHAN INPUT NOMOR KONTAK --}}
+        <div class="mt-4">
+            <x-input-label for="no_kontak" :value="__('Nomor Kontak (WhatsApp)')" />
+            <x-text-input id="no_kontak" class="block mt-1 w-full" type="text" name="no_kontak" :value="old('no_kontak')" />
+            <x-input-error :messages="$errors->get('no_kontak')" class="mt-2" />
+        </div>
+
         <div class="mt-4">
             <x-input-label for="id_opd" :value="__('OPD (Organisasi Perangkat Daerah)')" />
             {{-- Ambil data OPD dari controller --}}

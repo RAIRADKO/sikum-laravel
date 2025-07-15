@@ -18,6 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nama',
         'nip', // Digunakan untuk login
+        'no_kontak', // DITAMBAHKAN
         'password',
         'level',
         'id_opd',

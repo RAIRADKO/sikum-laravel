@@ -7,23 +7,22 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
-        Schema::create('assistants', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('nip')->unique()->nullable();
+        Schema::create('seri', function (Blueprint $table) {
+            $table->string('id', 5)->primary();
+            $table->string('category_name', 100);
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Batalkan migrasi.
      */
     public function down(): void
     {
-        Schema::dropIfExists('assistants');
+        Schema::dropIfExists('seri');
     }
 };
